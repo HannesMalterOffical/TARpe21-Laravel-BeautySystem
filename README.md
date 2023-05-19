@@ -9,6 +9,15 @@
 
 ### Autorid: Hannes Malter ja Remus-Markus Luht
 
+```
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php82-composer:latest \
+    composer install --ignore-platform-reqs
+```
+
 # Iluteeninduse broneerimis süsteem
 on vaja luua juuksuri- ja kosmeetikasalongi broneerimissüsteem. Klientidel on võimalik valida välja protseduur, ning aeg ja teenindaja. Salongil on võimalik näha ja hallata broneeringuid.
 

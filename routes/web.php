@@ -23,7 +23,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('Service', ServiceController::class)
+Route::resource('services', ServiceController::class)
     ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -27,9 +28,19 @@ class ServiceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:128',
+            'basePrice_cents' => 'integer|gte:0',
+            'duration_minutes'=>'integer|gte:0',
+            'description'=>'string'
+        ]);
+
+        $service = Service::create($validated);
+        $service->save();
+
+        return redirect(route('services.index'));
     }
 
     /**

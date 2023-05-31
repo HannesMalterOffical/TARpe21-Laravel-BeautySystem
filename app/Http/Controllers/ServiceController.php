@@ -14,7 +14,7 @@ class ServiceController extends Controller
      */
     public function index() : View
     {
-        return View("Service.index", [
+        return View("Services.index", [
             'services' => Service::all(),
         ]);
     }
@@ -33,10 +33,7 @@ class ServiceController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:128',
-            'basePrice_cents' => 'integer|gte:0',
-            'duration_minutes'=>'integer|gte:0',
-            'description'=>'string'
+
         ]);
 
         $service = Service::create($validated);
@@ -73,7 +70,10 @@ class ServiceController extends Controller
         $this->authorize('update', $service);
 
         $validated = $request->validate([
-            'description' => 'string|max:255',
+            'name' => 'required|string|max:128',
+            'basePrice_cents' => 'integer|gte:0',
+            'duration_minutes'=>'integer|gte:0',
+            'description'=>'string',
         ]);
 
         $service->update($validated);

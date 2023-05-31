@@ -2,27 +2,28 @@
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         <form method="POST" action="{{ route('services.store') }}">
             @csrf
+            @method('patch')
             <input type="text"
                    name="name"
-                   value="{{old('name')}}"
+                   value="{{old('name', $services->name)}}"
                    placeholder="{{__('Name the service')}}"
                    class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
             <input type="number"
                    min="0"
                    name="basePrice_cents"
-                   value="{{old('basePrice_cents')}}"
+                   value="{{old('basePrice_cents', $service->basePrice_cents)}}"
                    placeholder="{{__('Base price in cents')}}"
                    class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
             <input type="number"
                    name="duration_minutes"
-                   value="{{old('duration_minutes')}}"
+                   value="{{old('duration_minutes', $service->duration_minutes)}}"
                    placeholder="{{__('Duration of the Service')}}"
                    class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
             <textarea
                 name="description"
                 placeholder="{{ __('Add a description for a service') }}"
                 class="mt-2 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            >{{ old('description') }}</textarea>
+            >{{ old('description', $service->description) }}</textarea>
             <x-input-error :messages="$errors->get('description')" class="mt-2" />
             <x-primary-button class="mt-4">{{ __('Add Service') }}</x-primary-button>
         </form>
@@ -32,17 +33,17 @@
                     <div class="flex-1">
                         <div class="flex rows items-center">
                             <div>
+                                <div>
                                 <span class="text-gray-800">Name: {{ $service->name }}</span>
-                                {{-- <small class="ml-2 text-sm text-gray-600">{{ $service->created_at->format('j M Y, g:i a') }}</small> --}}
+                                <small class="ml-2 text-sm text-gray-600">{{ $service->created_at->format('j M Y, g:i a') }}</small>
                                 @unless ($service->created_at->eq($service->updated_at))
                                     <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
                                 @endunless
                             </div>
                             <div>
-                                <span class="ml-1 text-gray-800">Base Price: {{ $service->basePrice_cents / 100 }}€</span>
+                                <span class="text-gray-800">Base Price: {{ $service->basePrice_cents / 100 }}€</span>
                                 <span class="ml-2 text-sm text-gray-600">Duration: {{ $service->duration_minutes }}minutes</span>
                             </div>
-                            @if ($service->is(auth()->user()))
                             <x-dropdown>
                                 <x-slot name="trigger">
                                     <button>
@@ -57,7 +58,7 @@
                                     </x-dropdown-link>
                                 </x-slot>
                             </x-dropdown>
-                        @endif
+                            </div>
                         </div>
                         <p class="mt-4 text-lg text-gray-900">{{ $service->description }}</p>
                     </div>

@@ -56,17 +56,29 @@ class ServiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Service $service)
+    public function edit(Service $service): View
     {
-        //
+        $this->authorize('update', $service);
+
+        return view('services.edit', [
+            'service' => $service,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Service $service)
+    public function update(Request $request, Service $service): RedirectResponse
     {
-        //
+        $this->authorize('update', $service);
+
+        $validated = $request->validate([
+            'description' => 'string|max:255',
+        ]);
+
+        $service->update($validated);
+
+        return redirect(route('services.index'));
     }
 
     /**

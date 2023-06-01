@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->dateTime('booking_time');
+            $table->integer('total_price')->nullable();
+            $table->integer('paid_amount')->nullable();
+            $table->unsignedBigInteger('service_id')->nullable()
+                    ->references('id')
+                    ->on('services');
+            $table->unsignedBigInteger('client_id')->nullable()
+                    ->references('id')
+                    ->on('users');
+            $table->unsignedBigInteger('server_id')
+                    ->references('id')
+                    ->on('users');
             $table->timestamps();
         });
     }

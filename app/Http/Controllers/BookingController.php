@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\View\View;
 use App\Models\Booking;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -15,6 +16,7 @@ class BookingController extends Controller
     {
         return View("bookings.index",[
             'bookings'=>Booking::all(),
+            'services'=>Service::all(),
         ]);
     }
 
@@ -31,7 +33,17 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'booking_time' => 'required|date|after:today',
+            'service_id' => 'gt:0',
+        ]);
+        $booking = new Booking;
+        $booking->booking_time = $validated['booking_time'];
+        $booking->service()->associate(Service::find($validated['service_id']));
+        $booking->server()->associate($request->user());
+        $booking->save();
+
+        return redirect(route('bookings.index'));
     }
 
     /**

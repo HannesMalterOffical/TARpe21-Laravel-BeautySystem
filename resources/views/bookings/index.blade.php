@@ -29,10 +29,13 @@
                         Client:<span class="text-lg text-gray-800"> {{ $booking->client->name }}</span>
                         @endif
                         <small class="ml-2 text-sm text-gray-600">{{ $booking->created_at->format('j M Y, g:i a') }}</small>
-                        @unless ($booking->created_at->eq($booking->updated_at))
+                        {{-- @unless ($booking->created_at->eq($booking->updated_at))
                         <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
-                        @endunless
+                        @endunless --}}
                     </div>
+                    @if ($booking->server->is(auth()->user()))
+
+                    @endif
                     <x-dropdown>
                         <x-slot name="trigger">
                             <button>

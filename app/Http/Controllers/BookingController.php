@@ -6,6 +6,7 @@ use Illuminate\View\View;
 use App\Models\Booking;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class BookingController extends Controller
 {
@@ -57,17 +58,28 @@ class BookingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Booking $booking)
+    public function edit(Booking $booking): View
     {
-        //
+        $this->authorize('update', $booking);
+        return view('bookings.edit',[
+            'booking'=>$booking,
+            'services'=>Service::all(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Booking $booking)
+    public function update(Request $request, Booking $booking): RedirectResponse
     {
-        //
+        $this->authorize('update', $booking);
+        $validated = $request->validate([
+            'booking_time' => 'required|date|after:today',
+            'service_id' => 'gt:0',
+        ]);
+        $booking->update($validated);
+
+        return redirect(route('bookings.index'));
     }
 
     /**

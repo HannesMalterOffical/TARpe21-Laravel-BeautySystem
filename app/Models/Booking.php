@@ -2,45 +2,45 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-
-    use HasFactory;
-
     protected $fillable = [
         'booking_time',
     ];
 
     use HasFactory;
+
     /**
-     * Get the service associated with the Booking
+     * Get the service that owns the Booking
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function service(): HasOne
+    public function service(): BelongsTo
     {
-        return $this->hasOne(service::class);
+        return $this->belongsTo(Service::class);
     }
+
     /**
-     * Get the client associated with the Booking
+     * Get the client that owns the Booking
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function client(): HasOne
+    public function client(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
+
     /**
-     * Get the server associated with the Booking
+     * Get the server that owns the Booking
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function server(): HasOne
+    public function server(): BelongsTo
     {
-        return $this->hasOne(server::class);
+        return $this->belongsTo(User::class);
     }
 }

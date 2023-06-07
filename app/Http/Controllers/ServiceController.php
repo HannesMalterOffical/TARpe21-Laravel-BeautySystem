@@ -5,6 +5,9 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\BookingController;
+use App\Models\Booking;
+
 class ServiceController extends Controller
 {
     /**
@@ -15,6 +18,23 @@ class ServiceController extends Controller
         return View("services.index",[
             'services'=>Service::all(),
         ]);
+    }
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request) : RedirectResponse
+    {
+        // https://laravel.com/docs/10.x/validation#available-validation-rules
+        $validated = $request->validate([
+            'name' => 'required|string|max:128',
+            'basePrice_cents' => 'integer|gte:0',
+            'duration_minutes' => 'integer|gte:0',
+            'description' => 'nullable|string',
+        ]);
+        $service = Service::create($validated);
+        $service->save();
+
+        return redirect(route('services.index'));
     }
     public function show(Service $service)
     {
@@ -59,10 +79,8 @@ class ServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Service $service): RedirectResponse
+    public function destroy(Service $service, Booking $booking): RedirectResponse
     {
-        $this->authorize('delete', $service);
-
         $service->delete();
 
         return redirect(route('services.index'));

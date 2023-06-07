@@ -61,6 +61,12 @@ class BookingController extends Controller
     public function edit(Booking $booking): View
     {
         $this->authorize('update', $booking);
+        $booking_time = date_create($booking->booking_time);
+        $seconds = $booking_time->format('s');
+        if($seconds > 0){
+            $booking_time->sub(new DateInterval("PT".$seconds."S"));
+            $booking->booking_time = $booking_time->format('c');
+        }
         return view('bookings.edit',[
             'booking'=>$booking,
             'services'=>Service::all(),
@@ -87,6 +93,8 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+        $booking->delete();
+
+        return redirect(route('bookings.index'));
     }
 }

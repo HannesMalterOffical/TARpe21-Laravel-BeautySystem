@@ -21,9 +21,12 @@
                 <x-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.index')">
                     {{ __('Bookings') }}
                 </x-nav-link>
-                <x-nav-link :href="route('client.index')" :active="request()->routeIs('client.index')">
-                    {{ __('clients') }}
+                <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')">
+                    {{ __('Clients') }}
                 </x-nav-link>
+                {{-- <x-nav-link :href="route('bookedBookings.index')" :active="request()->routeIs('bookedBookings.index')">
+                    {{ __('BookedBookings') }}
+                </x-nav-link> --}}
                 </div>
             </div>
 
@@ -85,9 +88,12 @@
             <x-responsive-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.index')">
                 {{ __('Bookings') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('client.index')" :active="request()->routeIs('client.index')">
+            <x-responsive-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')">
                 {{ __('Clients') }}
             </x-responsive-nav-link>
+            {{-- <x-responsive-nav-link :href="route('bookedBookings.index')" :active="request()->routeIs('bookedBookings.index')">
+                {{ __('BookedBookings') }}
+            </x-responsive-nav-link> --}}
         </div>
 
         <!-- Responsive Settings Options -->

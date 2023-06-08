@@ -16,7 +16,7 @@
             <textarea name="description" placeholder="{{ __('Add a description for the service.') }}"
                 class="mt-2 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">{{ old('description') }}</textarea>
             <x-input-error :messages="$errors->get('description')" class="mt-2" />
-            <x-primary-button class="mt-4">{{ __('Add Service') }}</x-primary-button>
+            <x-primary-button class="mt-2">{{ __('Add Service') }}</x-primary-button>
         </form>
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
             @foreach ($services as $service)

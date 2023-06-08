@@ -26,7 +26,10 @@ class ClientController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        $booking->client()->associate($request->user());
+        $booking->update();
+
+        return redirect(route('clients.index'));
     }
 
     /**
@@ -34,6 +37,6 @@ class ClientController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+
     }
 }

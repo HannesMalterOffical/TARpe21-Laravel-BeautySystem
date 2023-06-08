@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BookingController;
-use App\Http\Controllers\ClientController; 
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,9 +33,9 @@ Route::resource('bookings', BookingController::class)
 ->only(['index', 'store', 'edit', 'update', 'destroy'])
 ->middleware(['auth', 'verified']);
 
-Route::get('/client', [ClientController::class, 'index'])->name('client.index');
-Route::patch('/client', [ClientController::class, 'update'])->name('client.update');
-Route::delete('/client', [ClientController::class, 'destroy'])->name('client.destroy');
+Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+Route::patch('/clients/{booking}', [ClientController::class, 'update'])->name('clients.update');
+Route::delete('/clients/{booking}', [ClientController::class, 'destroy'])->name('clients.destroy');
 
 
 

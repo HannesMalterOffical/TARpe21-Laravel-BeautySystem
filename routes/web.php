@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\BookedBookingsController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,10 @@ Route::resource('services', ServiceController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('bookings', BookingController::class)
+->only(['index', 'store', 'edit', 'update', 'destroy'])
+->middleware(['auth', 'verified']);
+
+Route::resource('bookedBookings', BookedBookingsController::class)
 ->only(['index', 'store', 'edit', 'update', 'destroy'])
 ->middleware(['auth', 'verified']);
 

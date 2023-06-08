@@ -12,14 +12,10 @@ class BookedBookingsController extends Controller
      */
     public function index()
     {
-        $this->authorize('update', $bookedBookings);
-        $validated = $request->validate([
-            'booking_time' => 'required|date|after:today',
-            'service_id' => 'gt:0',
+        return View("bookings.index",[
+            'bookings'=>Booking::all(),
+            'services'=>Service::all(),
         ]);
-        $bookedBookings->update($validated);
-
-        return redirect(route('bookedBookings.index'));
     }
 
     /**
@@ -59,7 +55,12 @@ class BookedBookingsController extends Controller
      */
     public function update(Request $request, BookedBookings $bookedBookings)
     {
-        //
+        $this->authorize('update', $booking);
+        $validated = $request->validate([
+            'booking_time' => 'required|date|after:today',
+            'service_id' => 'gt:0',
+        ]);
+        $booking->update($validated);
     }
 
     /**
